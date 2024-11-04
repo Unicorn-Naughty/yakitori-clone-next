@@ -1,0 +1,156 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_URL")
+}
+
+model User {
+  id               Int               @id @default(autoincrement())
+  fullName         String
+  email            String            @unique
+  password         String
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @default(now())
+  role             UserRole          @default(USER)
+  verified         DateTime?
+  cart             Cart?
+  order            Order[]
+  verificationCode VerificationCode?
+  provider         String?
+  providerId       String?
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  products Product[]
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  imageUrl    String
+  imageUrlBig String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+
+  variants    ProductVariant[]
+  indigrients Indigrient[]
+
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+}
+
+model ProductVariant {
+  id          Int        @id @default(autoincrement())
+  price       Int
+  variantId   Int?
+  variantName String
+  weight      Int
+  // Связь 1 to M, categoryId нужен для понимания родительского блока и привязки к нему продуктов по id
+  product     Product    @relation(fields: [productId], references: [id])
+  productId   Int
+  cartItems   CartItem[]
+}
+
+model RecProduct {
+  id        Int        @id @default(autoincrement())
+  quantity  Int
+  price     Int
+  name      String
+  imageUrl  String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
+}
+
+model FoodAppliances {
+  id        Int        @id @default(autoincrement())
+  quantity  Int
+  price     Int
+  name      String
+  imageUrl  String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
+}
+
+model Indigrient {
+  id    Int    @id @default(autoincrement())
+  name  String
+  price Int
+
+  products Product[]
+  cartItem CartItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model Cart {
+  id Int @id @default(autoincrement())
+
+  user        User?  @relation(fields: [userId], references: [id])
+  userId      Int?   @unique
+  totalAmount Int    @default(0)
+  token       String
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
+  items     CartItem[]
+}
+
+model CartItem {
+  id               Int            @id @default(autoincrement())
+  quantity         Int            @default(1)
+  productItem      ProductVariant @relation(fields: [productItemId], references: [id])
+  productItemId    Int
+  cart             Cart           @relation(fields: [cartId], references: [id])
+  cartId           Int
+  ingredients      Indigrient[]
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @default(now())
+}
+
+model Order {
+  id          Int         @id @default(autoincrement())
+  user        User?       @relation(fields: [userId], references: [id])
+  userId      Int?
+  token       String
+  totalAmount Int
+  status      OrderStatus 
+  paymentId   String?
+  items       Json
+
+  fullName String
+  address  String
+  email    String
+  phone    String
+  comment  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model VerificationCode {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int      @unique
+  code      String
+  createdAt DateTime @default(now())
+
+  @@unique([userId, code])
+}
+
+enum OrderStatus {
+  PENDING
+  SUCCEEDED
+  CANCELLED
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}

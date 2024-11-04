@@ -1,0 +1,27 @@
+<svg id="Слой_1" data-name="Слой 1" xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 153.87 43.56">
+  <defs>
+    <style>.cls-1{fill:#4db45e;}.cls-2{fill:url(#Безымянный_градиент_2);}</style>
+    <linearGradient id="Безымянный_градиент_2" x1="108.58" y1="180.22" x2="153.87" y2="180.22"
+                    gradientTransform="matrix(1, 0, 0, -1, 0, 189.16)" gradientUnits="userSpaceOnUse">
+      <stop offset="0.3" stop-color="#00b4e6"/>
+      <stop offset="1" stop-color="#088ccb"/>
+    </linearGradient>
+  </defs>
+  <title>Монтажная область 1_1</title>
+  <g id="g5">
+    <path id="path7" class="cls-1"
+          d="M41.46,0V0s-6,0-7.6,5.7c-1.47,5.25-5.6,19.75-5.71,20.15H27S22.79,11.05,21.3,5.71C19.7,0,13.69,0,13.69,0H0V43.56H13.69V17.69h1.15l8,25.87h9.51l8-25.85h1.14V43.56h13.7V0Z"/>
+  </g>
+  <g id="g9">
+    <path id="path11" class="cls-1"
+          d="M91.49,0a7.67,7.67,0,0,0-5.9,4.56l-9.7,21.31H74.75V0H61.05V43.56H74A7.91,7.91,0,0,0,80.07,39l9.51-21.3h1.14V43.56h13.7V0Z"/>
+  </g>
+  <g id="g13">
+    <path id="path15" class="cls-1" d="M110.5,19.78V43.56h13.7V29.67H139a14.81,14.81,0,0,0,14-9.89Z"/>
+  </g>
+  <g id="g17">
+    <path id="path24" class="cls-2"
+          d="M139,0H108.58a21.9,21.9,0,0,0,15.79,17.12h0a22.12,22.12,0,0,0,5.73.76h23.47a15.29,15.29,0,0,0,.3-3A14.83,14.83,0,0,0,139,0Z"/>
+  </g>
+</svg>
