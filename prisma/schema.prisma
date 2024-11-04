@@ -4,7 +4,8 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("POSTGRES_URL")
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 model User {
@@ -58,23 +59,23 @@ model ProductVariant {
 }
 
 model RecProduct {
-  id        Int        @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   quantity  Int
   price     Int
   name      String
   imageUrl  String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 }
 
 model FoodAppliances {
-  id        Int        @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   quantity  Int
   price     Int
   name      String
   imageUrl  String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 }
 
 model Indigrient {
@@ -103,15 +104,15 @@ model Cart {
 }
 
 model CartItem {
-  id               Int            @id @default(autoincrement())
-  quantity         Int            @default(1)
-  productItem      ProductVariant @relation(fields: [productItemId], references: [id])
-  productItemId    Int
-  cart             Cart           @relation(fields: [cartId], references: [id])
-  cartId           Int
-  ingredients      Indigrient[]
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @default(now())
+  id            Int            @id @default(autoincrement())
+  quantity      Int            @default(1)
+  productItem   ProductVariant @relation(fields: [productItemId], references: [id])
+  productItemId Int
+  cart          Cart           @relation(fields: [cartId], references: [id])
+  cartId        Int
+  ingredients   Indigrient[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @default(now())
 }
 
 model Order {
@@ -120,7 +121,7 @@ model Order {
   userId      Int?
   token       String
   totalAmount Int
-  status      OrderStatus 
+  status      OrderStatus
   paymentId   String?
   items       Json
 
